@@ -1,0 +1,84 @@
+# =============================================================================
+# AWS Landing Zone — Example Configuration
+# Copy this file to terraform.tfvars and fill in your values.
+# =============================================================================
+
+# Organization name (used as prefix for resources)
+org_name = "mycompany"
+
+# Primary region
+aws_region = "us-east-1"
+
+# Allowed regions for resource creation (enforced by SCP)
+allowed_regions = ["us-east-1", "us-west-2", "eu-west-1"]
+
+# CloudTrail log retention (days)
+log_retention_days = 90
+
+# Default tags for all resources
+tags = {
+  ManagedBy   = "terraform"
+  Project     = "aws-landing-zone"
+  Environment = "management"
+  Owner       = "platform-team"
+}
+
+# SSO account assignments
+# Map groups to permission sets on specific accounts
+# (Fill in account IDs after accounts are vended)
+sso_account_assignments = [
+  # {
+  #   account_id     = "123456789012"
+  #   permission_set = "AdministratorAccess"
+  #   principal_name = "Admins"
+  #   principal_type = "GROUP"
+  # },
+  # {
+  #   account_id     = "123456789012"
+  #   permission_set = "ReadOnlyAccess"
+  #   principal_name = "ReadOnly"
+  #   principal_type = "GROUP"
+  # },
+]
+
+# Accounts to vend (create under OUs)
+# OU IDs will be available after the first apply
+vended_accounts = {
+  # "log-archive" = {
+  #   email           = "aws+log-archive@mycompany.com"
+  #   ou_id           = "ou-xxxx-yyyyyyyy"  # Security OU
+  #   enable_config   = true
+  #   enable_guardduty = true
+  #   tags = {
+  #     Purpose = "Centralized logging"
+  #   }
+  # }
+  # "audit" = {
+  #   email           = "aws+audit@mycompany.com"
+  #   ou_id           = "ou-xxxx-yyyyyyyy"  # Security OU
+  #   enable_config   = true
+  #   enable_guardduty = true
+  #   tags = {
+  #     Purpose = "Security audit and compliance"
+  #   }
+  # }
+  # "network-hub" = {
+  #   email           = "aws+network@mycompany.com"
+  #   ou_id           = "ou-xxxx-zzzzzzzz"  # Infrastructure OU
+  #   enable_config   = true
+  #   enable_guardduty = true
+  #   tags = {
+  #     Purpose = "Transit Gateway and shared networking"
+  #   }
+  # }
+  # "production" = {
+  #   email           = "aws+production@mycompany.com"
+  #   ou_id           = "ou-xxxx-wwwwwwww"  # Workloads OU
+  #   enable_config   = true
+  #   enable_guardduty = true
+  #   tags = {
+  #     Purpose     = "Production workloads"
+  #     Environment = "production"
+  #   }
+  # }
+}
