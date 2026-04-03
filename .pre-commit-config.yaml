@@ -1,0 +1,73 @@
+###############################################################################
+# Pre-commit Configuration — AWS Landing Zone
+# Ensures code quality before commits reach the remote repository.
+# Install: pip install pre-commit && pre-commit install
+###############################################################################
+
+repos:
+  # ---------------------------------------------------------------------------
+  # Terraform formatting and validation
+  # ---------------------------------------------------------------------------
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.96.1
+    hooks:
+      # Auto-format HCL files
+      - id: terraform_fmt
+
+      # Validate Terraform syntax per module
+      - id: terraform_validate
+        args:
+          - --hook-config=--retry-once-with-cleanup=true
+
+      # Lint with TFLint using project config
+      - id: terraform_tflint
+        args:
+          - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
+
+      # Generate docs from module comments
+      - id: terraform_docs
+        args:
+          - --hook-config=--path-to-file=README.md
+          - --hook-config=--add-to-existing-file=true
+          - --hook-config=--create-file-if-not-exist=false
+
+  # ---------------------------------------------------------------------------
+  # General file hygiene
+  # ---------------------------------------------------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      # Remove trailing whitespace
+      - id: trailing-whitespace
+        exclude: '\.md$'
+
+      # Ensure files end with a newline
+      - id: end-of-file-fixer
+
+      # Validate YAML syntax
+      - id: check-yaml
+        args: ['--allow-multiple-documents']
+
+      # Detect accidentally committed secrets
+      - id: detect-private-key
+
+      # Prevent large files from being committed
+      - id: check-added-large-files
+        args: ['--maxkb=500']
+
+      # Validate JSON files
+      - id: check-json
+
+      # Fix mixed line endings
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+
+  # ---------------------------------------------------------------------------
+  # Security scanning
+  # ---------------------------------------------------------------------------
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: '\.terraform\.lock\.hcl$'
