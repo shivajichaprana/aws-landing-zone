@@ -182,7 +182,7 @@ aws-landing-zone/
 │   └── account_vending_test.tftest.hcl
 ├── .github/
 │   └── workflows/
-│       └── terraform.yml    # CI: fmt, validate, lint, test
+│       └── terraform-ci.yml   # CI: fmt, validate, lint, test
 ├── docs/
 │   └── design-decisions.md  # Architecture Decision Records
 ├── CONTRIBUTING.md
