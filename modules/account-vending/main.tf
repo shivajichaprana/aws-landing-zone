@@ -3,7 +3,7 @@
 # Creates new AWS accounts under specified OUs with baseline configuration
 # including AWS Config recording, GuardDuty membership, and IAM alias setup.
 # This module is the "factory" that stamps out new accounts with guardrails
-# already in place from day one.
+# already in place from the outset.
 # -----------------------------------------------------------------------------
 
 data "aws_caller_identity" "management" {}

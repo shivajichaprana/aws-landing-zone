@@ -92,7 +92,7 @@ This document records key architecture decisions made in this project, the reaso
 
 **Status:** Accepted
 
-**Context:** Not all organizations need all guardrails from day one. Forcing all SCPs on immediately can break existing workflows.
+**Context:** Not all organizations need all guardrails from the outset. Forcing all SCPs on immediately can break existing workflows.
 
 **Decision:** Each SCP has an `enable_*` boolean variable (defaulting to `true`) that controls whether the policy is created and attached.
 
